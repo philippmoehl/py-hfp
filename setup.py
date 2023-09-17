@@ -32,8 +32,8 @@ setup(
     packages=find_packages(),
     ext_modules=ext_modules,
     install_requires=[
-        'numpy>=1.20.0',
-        'trimesh>=3.23.5'
+        'numpy==1.26.0',
+        'trimesh==3.23.5'
     ],
     extras_require={"test": "pytest"},
     cmdclass={"build_ext": build_ext},
