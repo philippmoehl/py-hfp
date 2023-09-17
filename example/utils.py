@@ -1,18 +1,8 @@
-import hfp
 import matplotlib.pyplot as plt
-import trimesh
 import numpy as np
 import random
 import scipy
-
-def wrapper_hfp(vs, fs, num_clusters):
-    """
-    Wraps HFP C++ extension.
-    """
-    out = hfp.run_hfp(vs, fs, num_clusters)
-    idx = np.array(out)
-
-    return np.flip(idx).astype(int)
+import trimesh
 
 
 def load_vf(file_name):
@@ -45,7 +35,7 @@ def segments_split(vs, fs, idx):
         segments[segment] = (mesh)
     return segments
 
-def visualize_select(meshes):
+def visualize(meshes):
     colors = np.array([
         plt.get_cmap("hsv")(int(c*256/len(meshes))) for c in range(len(meshes))])
 
@@ -54,12 +44,3 @@ def visualize_select(meshes):
         mesh.visual.face_colors = np.repeat(color.reshape(1,-1), len(mesh.faces), axis=0)
     
     trimesh.Scene(meshes).show()
-
-vs, fs = load_vf("data/cup.obj")
-mesh = trimesh.Trimesh(vs, fs)
-
-idx = wrapper_hfp(vs, fs, 2)
-
-segments = segments_split(vs, fs, idx)
-
-visualize_select(segments.values())

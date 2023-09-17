@@ -16,15 +16,19 @@ def segment(vertices, faces, num_segments):
     Returns:
         numpy.ndarray: An array of segment indices per vertex.
     """
-    if not isinstance(vertices, np.ndarray) or not isinstance(faces, np.ndarray):
+    if not isinstance(vertices, np.ndarray) or not isinstance(
+        faces, np.ndarray
+    ):
         raise ValueError("Both 'vertices' and 'faces' must be numpy arrays.")
     if not isinstance(num_segments, int) or num_segments <= 0:
         raise ValueError("'num_segments' must be a positive integer.")
     if num_segments > vertices.shape[0]:
-        raise ValueError("'num_segments' cannot be larger than the amount of 'vertices'.")
+        raise ValueError(
+            "'num_segments' cannot be larger than the amount of 'vertices'."
+        )
     if not is_watertight(vertices, faces):
         raise ValueError("Mesh needs to be watertight.")
-        
+
     try:
         out = hfp.run_hfp(vertices, faces, num_segments)
         idx = np.array(out)
